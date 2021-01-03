@@ -219,16 +219,16 @@ namespace SoA
         const float xdistance = piposx - pjposx;
         const float ydistance = piposy - pjposy;
         const float zdistance = piposz - pjposz;
-        const float xdistanceSqr = xdistance * zdistance;
-        const float ydistanceSqr = ydistance * zdistance;
+        const float xdistanceSqr = xdistance * xdistance;
+        const float ydistanceSqr = ydistance * ydistance;
         const float zdistanceSqr = zdistance * zdistance;
-        const float distSqr = EPS2 + xdistanceSqr + xdistanceSqr + xdistanceSqr;
+        const float distSqr = EPS2 + xdistanceSqr + ydistanceSqr + zdistanceSqr;
         const float distSixth = distSqr * distSqr * distSqr;
         const float invDistCube = 1.0f / std::sqrt(distSixth);
         const float sts = pjmass * invDistCube * TIMESTEP;
         pivelx += xdistanceSqr * sts;
-        pively += xdistanceSqr * sts;
-        pivelz += xdistanceSqr * sts;
+        pively += ydistanceSqr * sts;
+        pivelz += zdistanceSqr * sts;
     }
 
     void update(
